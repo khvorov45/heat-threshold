@@ -1,4 +1,4 @@
-# Simulate some hospital admission-like data
+# Plot the data
 
 library(tidyverse)
 
@@ -21,7 +21,7 @@ plot_timeseries <- function(data, yname = "temperature") {
     scale_x_date("Date", breaks = "1 year") +
     scale_y_continuous(tools::toTitleCase(yname)) +
     labs(caption = paste0("Dotted line is the expected ", yname)) +
-    geom_line(alpha = 0.5) +
+    geom_point(alpha = 0.1, shape = 18) +
     geom_line(aes(y = !!rlang::sym(yname_exp)), col = "red", linetype = "11")
 }
 
