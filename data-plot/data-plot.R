@@ -25,6 +25,18 @@ plot_timeseries <- function(data, yname = "temperature") {
     geom_line(aes(y = !!rlang::sym(yname_exp)), col = "red", linetype = "11")
 }
 
+plot_xy <- function(data) {
+  data %>%
+    ggplot(aes(temperature, deaths)) +
+    ggdark::dark_theme_bw(verbose = FALSE) +
+    theme(
+      panel.grid.minor.y = element_blank()
+    ) +
+    scale_x_continuous("Temperature") +
+    scale_y_log10("Deaths") +
+    geom_point(alpha = 0.1, shape = 18)
+}
+
 save_plot <- function(plot, name) {
   ggdark::ggsave_dark(
     file.path(data_plot_dir, glue::glue("{name}.pdf")), plot,
@@ -38,7 +50,8 @@ sim_one <- read_data("sim-one")
 
 sim_one_plots <- list(
   "sim-one-temp" = plot_timeseries(sim_one),
-  "sim-one-deaths" = plot_timeseries(sim_one, "deaths")
+  "sim-one-deaths" = plot_timeseries(sim_one, "deaths"),
+  "sim-one-xy" = plot_xy(sim_one)
 )
 
 iwalk(sim_one_plots, save_plot)

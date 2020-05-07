@@ -2,6 +2,7 @@ rule all:
     input:
         "data-plot/sim-one-temp.pdf",
         "data-plot/sim-one-deaths.pdf",
+        "data-plot/sim-one-xy.pdf",
         "pred-plot/preds-sim-one.pdf"
 
 rule install_deps:
@@ -28,7 +29,8 @@ rule data_plot:
         "data/sim-one.csv"
     output:
         "data-plot/sim-one-temp.pdf",
-        "data-plot/sim-one-deaths.pdf"
+        "data-plot/sim-one-deaths.pdf",
+        "data-plot/sim-one-xy.pdf"
     shell:
         "Rscript data-plot/data-plot.R"
 
