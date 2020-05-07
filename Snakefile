@@ -1,6 +1,6 @@
 rule all:
     input:
-        "data/sim-one.csv"
+        "data-plot/sim-one-temp.pdf"
 
 rule install_deps:
     input:
@@ -18,3 +18,13 @@ rule sim:
         "data/sim-one.csv"
     shell:
         "Rscript data/sim.R"
+
+rule data_plot:
+    input:
+        ".deps-installed",
+        "data-plot/data-plot.R",
+        "data/sim-one.csv"
+    output:
+        "data-plot/sim-one-temp.pdf"
+    shell:
+        "Rscript data-plot/data-plot.R"

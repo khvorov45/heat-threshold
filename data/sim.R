@@ -13,7 +13,11 @@ simulate <- function(start_date, end_date) {
     date = seq(start_date, end_date, by = "days"),
     year = year(date),
     month = month(date),
-    temperature_exp = 20 + (1 / 365 * ((date - start_date) / ddays(1)))
+    day_offset = (date - start_date) / ddays(1),
+    temperature_exp = 20 + # Baseline
+      1 / 365 * day_offset + # Yearly increase
+      sin(2 * pi / 365 * (day_offset + 50)), # Monthly variation
+    temperature = rnorm(length(date), temperature_exp, 0.1)
   )
 }
 
