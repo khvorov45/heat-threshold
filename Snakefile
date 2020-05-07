@@ -1,6 +1,7 @@
 rule all:
     input:
-        "data-plot/sim-one-temp.pdf"
+        "data-plot/sim-one-temp.pdf",
+        "data-plot/sim-one-deaths.pdf"
 
 rule install_deps:
     input:
@@ -25,6 +26,7 @@ rule data_plot:
         "data-plot/data-plot.R",
         "data/sim-one.csv"
     output:
-        "data-plot/sim-one-temp.pdf"
+        "data-plot/sim-one-temp.pdf",
+        "data-plot/sim-one-deaths.pdf"
     shell:
         "Rscript data-plot/data-plot.R"

@@ -17,7 +17,10 @@ simulate <- function(start_date, end_date) {
     temperature_exp = 20 + # Baseline
       1 / 365 * day_offset + # Yearly increase
       sin(2 * pi / 365 * (day_offset + 50)), # Monthly variation
-    temperature = rnorm(length(date), temperature_exp, 0.1)
+    temperature = rnorm(length(date), temperature_exp, 0.1),
+    logdeaths_exp = 3 + 0.1 * temperature,
+    deaths_exp = exp(logdeaths_exp),
+    deaths = rpois(length(date), deaths_exp)
   )
 }
 

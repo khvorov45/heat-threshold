@@ -4,7 +4,8 @@ read_data <- function(name) {
     col_types = cols(
       year = col_integer(),
       month = col_integer(),
-      day_offset = col_integer()
+      day_offset = col_integer(),
+      deaths = col_integer()
     )
   )
 }
