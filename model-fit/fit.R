@@ -32,4 +32,4 @@ sim_one <- read_data("sim-one")
 
 fit_sim_one <- glm(deaths ~ temperature, poisson(), sim_one)
 preds_sim_one <- gen_pred(fit_sim_one)
-save_preds(preds_sim_one, "sim_one")
+save_preds(preds_sim_one, "sim-one")
