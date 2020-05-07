@@ -11,8 +11,6 @@ data_dir <- here::here("data")
 simulate <- function(start_date, end_date) {
   tibble(
     date = seq(start_date, end_date, by = "days"),
-    year = year(date),
-    month = month(date),
     day_offset = (date - start_date) / ddays(1),
     temperature_exp = 20 + # Baseline
       1 / 800 * day_offset + # Yearly increase
