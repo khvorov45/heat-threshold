@@ -3,7 +3,8 @@ rule all:
         "data-plot/sim-one-temp.pdf",
         "data-plot/sim-one-deaths.pdf",
         "data-plot/sim-one-xy.pdf",
-        "pred-plot/preds-sim-one.pdf"
+        "pred-plot/preds-glm-sim-one.pdf",
+        "pred-plot/preds-gam-sim-one.pdf"
 
 rule install_deps:
     input:
@@ -40,7 +41,8 @@ rule fit:
         "model-fit/fit.R",
         "data/sim-one.csv"
     output:
-        "model-fit/preds-sim-one.csv"
+        "model-fit/preds-glm-sim-one.csv",
+        "model-fit/preds-gam-sim-one.csv"
     shell:
         "Rscript model-fit/fit.R"
 
@@ -48,8 +50,10 @@ rule pred_plot:
     input:
         ".deps-installed",
         "pred-plot/pred-plot.R",
-        "model-fit/preds-sim-one.csv"
+        "model-fit/preds-glm-sim-one.csv",
+        "model-fit/preds-gam-sim-one.csv"
     output:
-        "pred-plot/preds-sim-one.pdf"
+        "pred-plot/preds-glm-sim-one.pdf",
+        "pred-plot/preds-gam-sim-one.pdf"
     shell:
         "Rscript pred-plot/pred-plot.R"

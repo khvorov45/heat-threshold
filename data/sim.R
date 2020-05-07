@@ -16,11 +16,12 @@ simulate <- function(start_date, end_date) {
     day_offset = (date - start_date) / ddays(1),
     temperature_exp = 20 + # Baseline
       1 / 800 * day_offset + # Yearly increase
-      10 * sin(2 * pi / 365 * (day_offset + 50)), # Monthly variation
+      10 * sin(2 * pi / 365 * (day_offset + 50)), # Cyclical variation
     temperature = rnorm(length(date), temperature_exp, 0.1),
     logdeaths_exp = 3 + # Baseline
       0.03 * temperature + # Temperature impact
-      1 / 4000 * day_offset, # Linear time impact (e.g. population growth)
+      1 / 4000 * day_offset + # Linear time impact (e.g. population growth)
+      1 * sin(2 * pi / 180 * (day_offset - 130)), # Cyclical variation
     deaths_exp = exp(logdeaths_exp),
     deaths = rpois(length(date), deaths_exp)
   )

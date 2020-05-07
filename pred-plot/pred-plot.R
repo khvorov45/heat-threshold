@@ -35,6 +35,9 @@ save_plot_preds <- function(plot, name) {
 
 # Script ======================================================================
 
-sim_one_preds <- read_preds("sim-one")
-plot_sim_one_preds <- plot_preds(sim_one_preds)
-save_plot_preds(plot_sim_one_preds, "sim-one")
+sim_one_preds <- list(
+  "glm-sim-one" = read_preds("glm-sim-one"),
+  "gam-sim-one" = read_preds("gam-sim-one")
+)
+plots_preds_sim_one <- map(sim_one_preds, plot_preds)
+iwalk(plots_preds_sim_one, save_plot_preds)

@@ -10,9 +10,9 @@ fit_dir <- here::here("model-fit")
 
 source(file.path(data_dir, "read_data.R"))
 
-gen_pred <- function(fit) {
+gen_pred <- function(fit, og_data) {
   preds <- predict(fit, se.fit = TRUE)
-  fit$data %>%
+  og_data %>%
     mutate(
       fit_log = preds$fit,
       fit_log_se = preds$se.fit,
@@ -30,6 +30,19 @@ save_preds <- function(preds, name) {
 
 sim_one <- read_data("sim-one")
 
-fit_sim_one <- glm(deaths ~ temperature + day_offset, poisson(), sim_one)
-preds_sim_one <- gen_pred(fit_sim_one)
-save_preds(preds_sim_one, "sim-one")
+fit_sim_one <- glm(
+  deaths ~ temperature + day_offset
+    + splines::ns(lubridate::yday(date), df = 6),
+  poisson(), sim_one
+)
+fit_gam_sim_one <- mgcv::gam(
+  deaths ~ temperature + day_offset + s(lubridate::yday(date)),
+  poisson(), sim_one
+)
+
+preds_sim_one <- list(
+  "glm-sim-one" = gen_pred(fit_sim_one, sim_one),
+  "gam-sim-one" = gen_pred(fit_gam_sim_one, sim_one)
+)
+
+iwalk(preds_sim_one, save_preds)
