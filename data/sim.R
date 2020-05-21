@@ -18,8 +18,8 @@ simulate <- function(start_date, end_date) {
     temperature = rnorm(length(date), temperature_exp, 3),
     logdeaths_exp = 3 + # Baseline
       0.03 * temperature + # Temperature impact
-      1 / 4000 * day_offset + # Linear time impact (e.g. population growth)
-      1 * sin(2 * pi / 180 * (day_offset - 130)), # Cyclical variation
+      1 / 4000 * day_offset, # Linear time impact (e.g. population growth)
+      + 1 * sin(2 * pi / 180 * (day_offset - 130)), # Cyclical variation
     deaths_exp = exp(logdeaths_exp),
     deaths = rpois(length(date), deaths_exp)
   )
